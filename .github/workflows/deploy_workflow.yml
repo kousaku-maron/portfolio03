@@ -37,8 +37,25 @@ jobs:
           name: dist
           path: hosting/dist
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting:prod
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          yarn global add firebase-tools
+          firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
+# 現状、Dockerのエラーでfailureなってしまうので、手動でDeployを実現している。
+#   deploy:
+#     name: Deploy for Hosting
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@master
+#       - name: Download Artifact
+#         uses: actions/download-artifact@master
+#         with:
+#           name: dist
+#           path: hosting/dist
+#       - name: Deploy to Firebase
+#         uses: w9jds/firebase-action@master
+#         with:
+#           args: deploy --only hosting:prod
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
