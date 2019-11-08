@@ -38,8 +38,8 @@ jobs:
           path: hosting/dist
       - name: Deploy to Firebase
         run: |
-          yarn global add firebase-tools
-          firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
+          yarn add -D firebase-tools
+          ./node_modules/.bin/firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
 # 現状、Dockerのエラーでfailureなってしまうので、手動でDeployを実現している。
 #   deploy:
 #     name: Deploy for Hosting
